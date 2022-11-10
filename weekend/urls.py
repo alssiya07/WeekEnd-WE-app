@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from weekendpost import views
+from rest_framework.routers import DefaultRouter
+
+router=DefaultRouter()
+router.register("users",views.UsersView,basename="users")
+router.register("posts",views.PostsView,basename="posts")
+router.register("commends",views.CommendsView,basename="commends")
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+]+router.urls

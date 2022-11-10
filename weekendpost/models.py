@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db.models import Count
 # Create your models here.
 from django.contrib.auth.models import User
 
@@ -9,11 +9,11 @@ class Posts(models.Model):
     description=models.CharField(max_length=500)
     posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
     posted_date=models.DateField(auto_now_add=True)
-    like=models.ManyToManyField(User,related_name="liked_by")
 
     @property
     def posts_cmd(self):         
-        return self.cmd_set.all()
+        qs=self.commend_set.all().annotate(u_count=Count("commeds_like")).ordered_by("-u_count")
+        return qs
 
     def __str__(self):
         return self.title
@@ -25,6 +25,10 @@ class Commends(models.Model):
     commeded_date=models.DateField(auto_now_add=True)
     commeds_like=models.ManyToManyField(User,related_name="like")
 
+    @property
+    def likescount(self):
+        return self.commeds_like.all().count()
+
     def __str__(self):
-        return self.cmd
+        return self.commend
 
