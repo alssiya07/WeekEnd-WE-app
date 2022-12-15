@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'weekendpost'
+    'weekendpost',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'weekendweb'
 ]
 
 MIDDLEWARE = [

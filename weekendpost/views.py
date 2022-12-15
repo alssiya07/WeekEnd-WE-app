@@ -14,18 +14,25 @@ from rest_framework.decorators import action
 class UsersView(ModelViewSet):
     serializer_class=UserSerialiizer
     queryset=User.objects.all()
+
 # ----------------------------------------------------------------------------------
 # localhost:8000/posts/     post
 # localhost:8000/posts/     get
 
 class PostsView(ModelViewSet):
-    authentication_classes=[authentication.BasicAuthentication]
+    authentication_classes=[authentication.TokenAuthentication]
     permission_classes=[permissions.IsAuthenticated]
     serializer_class=PostsSerializer
     queryset=Posts.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(posted_by=self.request.user)
+
+# -----------------------------------------------------------------------
+    @action(methods=["GET"],detail=True)
+    def posts(self,request,*args,**kwargs):  # courses provided
+        qs=Posts.objects.values_list("post",flat=True)
+        return Response(data=qs)
 # ---------------------------------------------------------------------------------
 # localhost:8000/posts/my_posts/
 
@@ -65,15 +72,15 @@ class PostsView(ModelViewSet):
 # localhost:8000/commends/1/cmd_likes/
 
 class CommendsView(ModelViewSet):
+    authentication_classes=[authentication.TokenAuthentication]
+    permission_classes=[permissions.IsAuthenticated]
     serializer_class=CommendsSerializer
     queryset=Commends.objects.all()
-    authentication_classes=[authentication.BasicAuthentication]
-    permission_classes=[permissions.IsAuthenticated]
     
 
     @action(methods=["GET"],detail=True)
     def cmd_likes(self,request,*args,**kwargs):
         cmd=self.get_object()       
         usr=request.user
-        cmd.commeds_like.add(usr)
-        return Response(data="likes the commend")
+        qs=cmd.commeds_like.add(usr)
+        return Response(data=qs)

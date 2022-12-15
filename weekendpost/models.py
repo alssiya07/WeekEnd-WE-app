@@ -11,9 +11,13 @@ class Posts(models.Model):
     posted_date=models.DateField(auto_now_add=True)
 
     @property
-    def posts_cmd(self):         
+    def posts_cmdcount(self):         
         qs=self.commend_set.all().annotate(u_count=Count("commeds_like")).ordered_by("-u_count")
         return qs
+
+    @property
+    def posts_cmd(self):
+        return self.commends_set.all()
 
     def __str__(self):
         return self.title

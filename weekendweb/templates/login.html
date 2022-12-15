@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <img src=".../weeendweb/images/e.png" class="img-fluid rounded-start" alt="..."
+                        style="width: 95%; height: auto;">
+            </div>
+            <div class="col-4">
+                <form action="" method="post">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <!-- django template -->
+                    <button type="submit" class="btn btn-info">Login</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
