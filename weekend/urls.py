@@ -26,5 +26,5 @@ router.register("commends",views.CommendsView,basename="commends")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('token/',obtain_auth_token),
-    path('web/',include('weekendweb.urls'))
+    path('',include('weekendweb.urls'))
 ]+router.urls

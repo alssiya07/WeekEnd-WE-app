@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{%block body_block%}
+
+<!-- Nested row for non-featured blog posts-->
+
+
+
+<div class="row">
+    <div class="col-lg-8">
+
+        {%for p in posts%}
+
+        <!-- Blog post-->
+        <div class="card mb-4">
+            <p class="post-meta">Posted by<a href="#!">{{p.posted_by}}</a></p>
+            <a href="#!"><img class="card-img-top" src="{{p.images.url}}" alt="..." /></a>
+            <div class="card-body">
+                <div class="small text-muted">{{p.posted_date}}</div>
+                <h2 class="card-title h4">{{p.title}}</h2>
+                <p class="card-text">{{p.description}}</p>
+                <form class="mb-4" action="{%url 'add-commend' p.id %}" method="post">
+                    {% csrf_token %}
+                    <textarea placeholder="leave a comment!" name="commend" class="form-control" rows="3"></textarea>
+                    <button type="submit" class="btn btn-outline-info mt-2 btn-sm">Add</button>
+                </form>
+                <!-- <ul class="list-group list-group-flush"> -->
+                <!-- cmd -->
+                {%for cmd in p.posts_cmd%}.
+                <div class="card">
+                    <div class="card-header">
+                        <a href="#!"><img class="card-img-top"  src="{{p.images.url}}" alt="..." /></a>
+                        <a href="#!">{{p.posted_by}}</a>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{{cmd}} </p>
+                                <h6>on {{cmd.commeded_date}}</h6>
+                        </blockquote>
+                        Likes:{{ans.likescount}}
+            <a href="#" class="btn btn-sm">
+                <i class="fa-regular fa-heart fa-xl"></i>
+            </a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        {% endfor%}
+
+    </div>
+    <div class="col-lg-4">
+        <h3>UPLOAD YOUR POST</h3>
+        <hr class="border border-danger border-2 opacity-50">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="upload">
+        </form>
+    </div>
+</div>
+{%endblock%}
