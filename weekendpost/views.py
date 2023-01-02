@@ -33,6 +33,17 @@ class PostsView(ModelViewSet):
     def posts(self,request,*args,**kwargs):  # courses provided
         qs=Posts.objects.values_list("post",flat=True)
         return Response(data=qs)
+
+# ---------------------------------------------------------------------------------
+#  post like
+
+    @action(methods=["GET"],detail=True)
+    def posts_likes(self,request,*args,**kwargs):
+        pst=self.get_object()       
+        usr=request.user
+        qs=pst.post_like.add(usr)
+        return Response(data=qs)
+
 # ---------------------------------------------------------------------------------
 # localhost:8000/posts/my_posts/
 

@@ -38,9 +38,10 @@ class PostsSerializer(serializers.ModelSerializer):
     id=serializers.IntegerField(read_only=True)
     posted_by=serializers.CharField(read_only=True)
     posts_cmd=CommendsSerializer(read_only=True,many=tuple)
+    post_likescount=serializers.IntegerField(read_only=True)
 
     class Meta:
         model=Posts
         fields=["id","title",
         "description","image",
-        "posted_by","posted_date","posts_cmd"]
+        "posted_by","posted_date","posts_cmd","post_likescount"]

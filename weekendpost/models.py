@@ -9,15 +9,21 @@ class Posts(models.Model):
     description=models.CharField(max_length=500)
     posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
     posted_date=models.DateField(auto_now_add=True)
+    post_like=models.ManyToManyField(User,related_name="liked")
+
 
     @property
     def posts_cmdcount(self):         
-        qs=self.commend_set.all().annotate(u_count=Count("commeds_like")).ordered_by("-u_count")
+        qs=self.commends_set.all().annotate(u_count=Count("commeds_like")).order_by("-u_count")
         return qs
 
     @property
     def posts_cmd(self):
         return self.commends_set.all()
+    
+    @property
+    def post_likescount(self):
+        return self.post_like.all().count()
 
     def __str__(self):
         return self.title
