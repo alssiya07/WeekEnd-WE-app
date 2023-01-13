@@ -18,13 +18,17 @@ from django.urls import path,include
 from rest_framework.authtoken.views import obtain_auth_token
 from weekendpost import views
 from rest_framework.routers import DefaultRouter
+from django.conf import settings
+from django.conf.urls.static import static
 
 router=DefaultRouter()
 router.register("users",views.UsersView,basename="users")
 router.register("posts",views.PostsView,basename="posts")
 router.register("commends",views.CommendsView,basename="commends")
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('token/',obtain_auth_token),
     path('',include('weekendweb.urls'))
-]+router.urls
+]+router.urls+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

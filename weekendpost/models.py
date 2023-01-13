@@ -10,6 +10,7 @@ class Posts(models.Model):
     posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
     posted_date=models.DateField(auto_now_add=True)
     post_like=models.ManyToManyField(User,related_name="liked")
+    
 
 
     @property
@@ -21,12 +22,14 @@ class Posts(models.Model):
     def posts_cmd(self):
         return self.commends_set.all()
     
+    def __str__(self):
+        return self.title
+        
     @property
     def post_likescount(self):
         return self.post_like.all().count()
 
-    def __str__(self):
-        return self.title
+    
 
 class Commends(models.Model):
     post=models.ForeignKey(Posts,on_delete=models.CASCADE)

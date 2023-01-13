@@ -1,14 +1,10 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
-# Create your views here.
-
 from django.views.generic import TemplateView,CreateView,FormView,ListView,DetailView
-from django.contrib.auth.models import User
 from weekendpost.models import Posts,Commends
-from weekendweb.form import UserRegistrationForm,UserLoginForm
+from weekendweb.form import UserRegistrationForm,UserLoginForm,PostForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
-from weekendweb.form import PostForm
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 
@@ -50,7 +46,7 @@ class LoginView(FormView):
                 login(request,usr)
                 return redirect("home")
             else:
-                return render(request,self.template_name,{"form":form})
+                return render(request,self.template_name)
 
 # -----------------------------------------------------------
 @method_decorator(decs,name="dispatch")
@@ -66,12 +62,12 @@ class IndexView(CreateView,ListView):
         messages.success(self.request,"post uploaded")
         return super().form_valid(form)
     def get_queryset(self):
-        return Posts.objects.exclude(posted_by=self.request.user).order_by("-posted_date")
+        return Posts.objects.order_by("-posted_date")
 
 # -----------------------------------------------------------
 #  like post
 decs
-def post_like_view(request,*args,**kw):
+def posts_likes(request,*args,**kw):
     id=kw.get("id")
     pst=Posts.objects.get(id=id)
     pst.post_like.add(request.user)
@@ -108,14 +104,13 @@ def commeds_like_view(request,*args,**kw):
 
 # -----------------------------------------------------------
 # my posts
-# class MyPostView(ListView):
-#     template_name="mypost.html"
-#     form_class=PostForm
-#     success_url=reverse_lazy("my-post")
-#     model=Posts
-#     context_object_name="posts"
+class MyPostView(ListView):
+    template_name="mypost.html"
+    model=Posts
+    context_object_name="post"
 
-
+    def get_queryset(self):
+        return Posts.objects.filter(posted_by=self.request.user)
 # -----------------------------------------------------------
 # sign out
 decs

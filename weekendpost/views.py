@@ -34,25 +34,16 @@ class PostsView(ModelViewSet):
         qs=Posts.objects.values_list("post",flat=True)
         return Response(data=qs)
 
-# ---------------------------------------------------------------------------------
-#  post like
 
+
+# ---------------------------------------------------------------------------------
+# localhost:8000/posts/5/posts_likes/
     @action(methods=["GET"],detail=True)
     def posts_likes(self,request,*args,**kwargs):
         pst=self.get_object()       
         usr=request.user
         qs=pst.post_like.add(usr)
         return Response(data=qs)
-
-# ---------------------------------------------------------------------------------
-# localhost:8000/posts/my_posts/
-
-    @action(methods=['GET'],detail=False)
-    def my_posts(self,request,*args,**kwargs):
-        qs=request.user.posts_set.all()
-        serializer=PostsSerializer(qs,many=True)
-        return Response(data=serializer.data)
-
 # --------------------------------------------------------------------------------
 # localhost:8000/posts/1/add_cmd/
 
@@ -77,6 +68,21 @@ class PostsView(ModelViewSet):
         pst=Posts.objects.get(id=id)
         qs=pst.commends_set.all()
         serializer=CommendsSerializer(qs,many=True)
+        return Response(data=serializer.data)
+
+
+# ---------------------------------------------------------------------------------
+# localhost:8000/posts/my_posts/
+# class UserProfileViewSet(ModelViewSet):
+#     queryset = UserProfile.objects.all()
+#     authentication_classes = [authentication.TokenAuthentication]
+#     serializer_class = UserProfileSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+    
+    @action(methods=['GET'],detail=False)
+    def my_posts(self,request,*args,**kwargs):
+        qs=request.user.posts_set.all()
+        serializer=PostsSerializer(qs,many=True)
         return Response(data=serializer.data)
 
 # ----------------------------------------------------------------------------------

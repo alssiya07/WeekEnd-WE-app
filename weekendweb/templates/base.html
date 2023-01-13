@@ -23,16 +23,17 @@
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#!">WeekEnd</a>
+            <a class="navbar-brand" href="{%url 'home'%}">WeekEnd</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                    <li class="nav-item"><a class="nav-link" href="#!">My Posts</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">Comments</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">Likes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{%url 'home'%}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{%url 'my-post'%}">My Posts</a></li>
+                    <li class="nav-item"><a class="nav-link" >Comments</a></li>
+                    <li class="nav-item"><a class="nav-link" >Likes</a></li>
                     <li class="nav-item"><a class="nav-link active" aria-current="page"
                             href="{%url 'signout'%}">Logout</a></li>
                 </ul>
@@ -45,9 +46,9 @@
         </div>
     </nav>
     <!-- Page header with logo and tagline-->
-    <header class="py-5 bg-light border-bottom mb-4">
+    <header class="py-5  bg-dark border-bottom mb-4">
         <div class="container">
-            <div class="text-center my-5">
+            <div class="text-center text-white my-5">
                 <h1 class="fw-bolder">Welcome to WE Home!</h1>
                 {% comment %} <p class="lead mb-0">Post your WeekEnds with your friends</p> {% endcomment %}
             </div>

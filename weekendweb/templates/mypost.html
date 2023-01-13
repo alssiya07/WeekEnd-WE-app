@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{%block body_block%}
+
+<div class="row">
+    {%for mp in post%}
+    <div class="col-lg-6">
+
+        <!-- Blog post-->
+        <div class="card mb-4">
+            <a href="#!">
+                <img class="card-img-top" src="{{mp.image.url}}" alt="..." /></a>
+            <div class="card-body">
+                <div class="small text-muted">
+                    <p class="post-meta">@{{mp.posted_by}}</p>
+                    {{mp.posted_date}}
+                </div>
+                <h2 class="card-title h4">{{mp.title}}</h2>
+                <p class="card-text">{{mp.description}}</p>
+                <!-- cmd-->
+                <div class="card" style="width: 18rem;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Likes: {{mp.post_likescount}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endfor%}
+</div>
+{%endblock%}
